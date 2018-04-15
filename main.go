@@ -16,6 +16,9 @@ func main(){
 	directory := flag.Arg(0)
 	fileList := getFileList(directory);
 
+	// オプションに沿って処理を実行
+	for fileList
+
 	fmt.Println(fileList)
 
 }
