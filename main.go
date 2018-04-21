@@ -2,40 +2,33 @@ package main
 
 import (
 	"flag"
-	//"github.com/dorako321/imgc"
-	"io/ioutil"
-	"path/filepath"
-	"fmt"
+	"./modules/converter"
+	"./modules/directory"
+	"os"
+)
+
+
+var (
+	fileFrom = flag.String("to", "jpg", "select file type (default is jpg)")
+	fileTo = flag.String("from", "png", "select file type (default is png)")
 )
 
 func main(){
 	flag.Parse()
-	//var fileType = flag.String("type", "jpeg", "select file type (default is jpeg)")
 
 	// 処理対象のディレクトリを取得
 	directory := flag.Arg(0)
-	fileList := getFileList(directory);
+	fileList := directoryUtil.GetFileList(directory, *fileFrom);
 
 	// オプションに沿って処理を実行
-	for fileList
-
-	fmt.Println(fileList)
-
-}
-
-func getFileList(dir string) []string {
-	// 対象のディレクトリを読み込み
-	files, err := ioutil.ReadDir(dir)
-	if err != nil {
-		panic(err)
-	}
-	var paths []string
-	for _, file := range files {
-		if file.IsDir(){
-			paths = append(paths, getFileList(filepath.Join(dir, file.Name()))...);
-		} else {
-			paths = append(paths, filepath.Join(dir, file.Name()))
+	for _, file := range fileList {
+		err := converter.ToConvert(file, *fileTo)
+		if err != nil {
+			os.Exit(1)
 		}
 	}
-	return paths
+
+	os.Exit(0)
 }
+
+
